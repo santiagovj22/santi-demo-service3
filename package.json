@@ -1,0 +1,21 @@
+{
+  "name": "santi-demo-service3",
+  "version": "0.1.0",
+  "description": "repo de prueba desde idp para santi 3",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test 'test/**/*.test.js'",
+    "test:contract": "node --test test/contract.test.js"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "pino": "^9.5.0"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

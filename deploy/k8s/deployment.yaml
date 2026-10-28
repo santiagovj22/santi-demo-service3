@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: santi-demo-service3
+  labels:
+    app: santi-demo-service3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: santi-demo-service3
+  template:
+    metadata:
+      labels:
+        app: santi-demo-service3
+    spec:
+      # AD-16: non-root
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: santi-demo-service3
+          image: ghcr.io/santiagovj22/santi-demo-service3:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: LOG_LEVEL
+              value: "info"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
